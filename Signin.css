@@ -1,0 +1,51 @@
+section {
+    width: 50%;
+    margin: auto;
+    background-color: beige;
+    padding: 40px;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 1px 1px 20% 5px;
+}
+
+h3 {
+    text-align: center;
+}
+
+#areas {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 50%;
+    margin: auto;
+    margin-top: 40px;
+}
+
+#areas input {
+    padding: 10px;
+    border: 1px solid gray;
+    box-shadow: 1px 1px 3px rgb(139, 136, 136);
+    border-radius: 5px;
+}
+
+#input {
+    width: 21%;
+    margin: auto;
+    margin-top: 12px;
+}
+
+input[type='submit'] {
+    padding: 10px;
+    width: 8rem;
+    color: white;
+    background-color: #0062cc;
+    border: none;
+    border-radius: 5px;
+}
+
+.error {
+    color: red;
+    font-size: 20px;
+    text-align: center;
+    font-family: serif
+}

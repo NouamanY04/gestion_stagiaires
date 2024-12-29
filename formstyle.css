@@ -1,0 +1,91 @@
+form {
+    background-color: antiquewhite;
+    padding: 40px;
+    width: 60%;
+    margin: auto;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+#personelInformations {
+    border: 1px solid gray;
+    padding: 10px;
+}
+
+#personalInput {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+#personalInput input {
+    width: 50%;
+}
+
+input[type='date'] {
+    padding: 10px;
+    width: 80%;
+}
+
+#birthdate {
+    display: flex;
+    width: 100%;
+    gap: 2px;
+}
+
+#AcademicInformations {
+    border: 1px solid gray;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+#groupSelect {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.blockCompetenses {
+    margin-left: 50px;
+}
+
+#image {
+    margin-top: 5px;
+    border: 1px solid gray;
+    padding: 10px;
+}
+
+#buttonUpload {
+    width: 100%;
+    padding: 5px;
+    color: white;
+    background-color: #0062cc;
+    border: none;
+    border-radius: 5px;
+}
+
+#submit {
+    margin-top: 5px;
+}
+
+input[type='submit'] {
+    width: 49%;
+    padding: 10px;
+    color: white;
+    background-color: green;
+    border: none;
+    border-radius: 5px;
+}
+
+#cancelBtn {
+    width: 50%;
+    padding: 10px;
+    background-color: #f39c12;
+    border: none;
+    border-radius: 5px;
+}
+
+#cancelBtn a {
+    color: white;
+    text-decoration: none;
+}
