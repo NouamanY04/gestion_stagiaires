@@ -39,24 +39,24 @@ mysqli_close($id);
 </head>
 <body>
     <section>
-        <h3>Se Connecter</h3>
-        <?php
-            if(@$password_false){
-                echo '<h2 class=error>username or password incorrect</h2>';
-            }
-        ?>
-        <form action="<?=$_SERVER['PHP_SELF']?>" method='POST'>
-            <div id="areas">
-                <input type="text" name="login" id="login" placeholder="username">
-                <input type="password" name="pwd" id="pwd" placeholder="password">
-            </div>
-            <br>
-            <div id='input'>
-                <input type="submit" name='sb' value="login">
-            </div>
-        </form>
-        
-        
+        <div class="formlogin">
+            <p>Se Connecter</p>
+            <?php
+                if(@$password_false){
+                    echo '<h2 class=error>username or password incorrect</h2>';
+                }
+            ?>
+            <form action="<?=$_SERVER['PHP_SELF']?>" method='POST'>
+                <div id="areas">
+                    <input type="text" name="login" id="login" placeholder="username">
+                    <input type="password" name="pwd" id="pwd" placeholder="password">
+                </div>
+                <br>
+                <div id='input'>
+                    <input type="submit" name='sb' value="login">
+                </div>
+            </form> 
+        </div>
     </section>
 </body>
 </html>

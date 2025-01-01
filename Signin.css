@@ -1,15 +1,16 @@
 section {
-    width: 50%;
+    width: 30%;
+    height: 300px;
     margin: auto;
-    background-color: beige;
+    margin-top: 10%;
     padding: 40px;
-    border: 1px solid black;
     border-radius: 5px;
-    box-shadow: 1px 1px 20% 5px;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 }
 
-h3 {
+p{
     text-align: center;
+    font-size: larger;
 }
 
 #areas {

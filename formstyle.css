@@ -1,15 +1,17 @@
 form {
-    background-color: antiquewhite;
-    padding: 40px;
-    width: 60%;
+    padding: 30px;
+    width: 50%;
     margin: auto;
     border: 1px solid gray;
     border-radius: 5px;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+    margin-top: 10px;
 }
 
 #personelInformations {
     border: 1px solid gray;
     padding: 10px;
+    border-radius: 5px;
 }
 
 #personalInput {
@@ -20,6 +22,8 @@ form {
 
 #personalInput input {
     width: 50%;
+    height: 19px;
+    padding: 10px;
 }
 
 input[type='date'] {
@@ -37,6 +41,7 @@ input[type='date'] {
     border: 1px solid gray;
     padding: 10px;
     margin-top: 5px;
+    border-radius: 5px;
 }
 
 #groupSelect {
@@ -53,11 +58,13 @@ input[type='date'] {
     margin-top: 5px;
     border: 1px solid gray;
     padding: 10px;
+    border-radius: 5px;
 }
 
 #buttonUpload {
     width: 100%;
     padding: 5px;
+    margin-top: 10px;
     color: white;
     background-color: #0062cc;
     border: none;

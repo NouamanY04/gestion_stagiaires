@@ -13,6 +13,7 @@ if(isset($_GET["nbrpagebloc"]))
 //if reset button in search form is clicked
 if(isset($_GET["reset"])){
     unset($_GET);
+    header("location:affichage.php  ");
 }
 
 //si le nom pour la recherche est saisi
@@ -122,7 +123,6 @@ $req_stagiaires=mysqli_query($id,"SELECT  s.id , s.nom, s.prenom, s.date_nais, g
     <section id='main'>
         
 
-
         <div id='searchArea'> 
             <h3>&nbsp;&nbsp;&nbsp;Rechercher Etudiant</h3>
             <form method="get">
@@ -141,35 +141,52 @@ $req_stagiaires=mysqli_query($id,"SELECT  s.id , s.nom, s.prenom, s.date_nais, g
         </div>
 
 
-        <form method="get" id="blc">
-            <select name="nbrpagebloc" onchange="document.getElementById('blc').submit()">
-                <option <?php if($nbr==5) echo "selected";?>>5</option>
-                <option <?php if($nbr==10) echo "selected";?>>10</option>
-                <option <?php if($nbr==20) echo "selected";?>>20</option>
-            </select>
+        <br><br>
+        
+        <div id="actions">
+                <form action="SupprimerTout.php" method="post">
+                    <button onclick="return confirm('Attention!Opération irréversible!!!!');" id='btn-d'>Supprimer Tout</button>
+                </form><br><br>
+
+                <button id='addBtn'><a href="formulaire.php">Ajouter Etudiant</a></button>
+        </div>
+
+        <form method="get" id="blc"> 
+            <div>
+                <span style="font-size:x-large;font-weight:bold;"><?=$nbrSt?> Etudiant(s)</span>
+            </div>
+                 
+            <div id='pag'>
+                <?php
+                for($i=1;$i<=$nbrpage;$i++){?>
+
+                <a href="affichage.php?page=<?=$i?>&nomR=<?=@$nomR?>&prenomR=<?=@$prenomR?>&idgroupe=<?=@$idgroupe?>&nbrpagebloc=<?=$nbr?>"
+                        class="<?php
+                            if ($i == ((int)($_GET["page"] ?? 0)) || ($i == 1 && empty($_GET["page"]))) {
+                                echo 'active';
+                            } else {
+                                echo 'disabled';
+                            }
+                        ?>">
+                        <?=$i?>
+                </a>
+            <?php }?>
+            </div>
+
+            <div id="slctStudnt">
+                Students Per Page:
+                <select name="nbrpagebloc" id="nbrpage" onchange="document.getElementById('blc').submit()">
+                    <option <?php if($nbr==5) echo "selected";?>>5</option>
+                    <option <?php if($nbr==10) echo "selected";?>>10</option>
+                    <option <?php if($nbr==20) echo "selected";?>>20</option>
+                </select>
+            </div>
         
             <input type="hidden" name="nomR" value="<?=@$nomR?>">
             <input type="hidden" name="prenomR" value="<?=@$prenomR?>">
             <input type="hidden" name="idgroupe" value="<?=@$idgroupe?>">
-                
-
-            <?php
-            for($i=1;$i<=$nbrpage;$i++){?>
-
-            <a href="affichage.php?page=<?=$i?>&nomR=<?=@$nomR?>&prenomR=<?=@$prenomR?>&idgroupe=<?=@$idgroupe?>&nbrpagebloc=<?=$nbr?>" <?php if(($i==((int)@$_GET["page"]))or($i==1 and isset($_GET) and !array_key_exists("page",$_GET))or($i==1 and !isset($_GET))) {?> style="padding-left:20px;padding-right:20px;font-size:x-large;color:red;background-color:gray;" <?php }?>><?=$i?></a>
-            <?php }?>
+           
         </form>
-        <br><br>
-        
-        <div id="actions">
-                <!-- <form action="SupprimerTout.php" method="post">
-                    <button onclick="return confirm('Attention!Opération irréversible!!!!');" id='btn-d'>Supprimer Tout</button>
-                </form><br><br> -->
-
-                <button id='addBtn'><a href="formulaire.php">Ajouter Stagiaire</a></button>
-        </div>
-
-        <span style="font-size:x-large;font-weight:bold;"><?=$nbrSt?> Stagiaire(s)</span>
             <table>
                 <tr>
                     <th><input type="checkbox" id="ckall" onclick="checkAll(this)"></th>
@@ -188,8 +205,7 @@ $req_stagiaires=mysqli_query($id,"SELECT  s.id , s.nom, s.prenom, s.date_nais, g
                 <tr>
                     <td><input type="checkbox" name="ck[]" onclick="check()" value="<?=$row["id"]?>"></td>
                     <td><a href="suppressionSt.php?id=<?=$row["id"]?>" onclick="return confirm('Voulez-vous supprimer le stagiaire <?php echo $row['nom'].' '.$row['prenom'];?> ?')">
-                                    <button id='btn-d'>DELETE</button>
-                        </a>
+                                    <button id='btn-d'>DELETE</button></a>
                         <a href="formulaire.php?id=<?=$row["id"]?>"><button id='btn-e'>UPDATE</button></a>
                     </td>
                     <td><?=$row["nom"]?></td>
@@ -197,7 +213,7 @@ $req_stagiaires=mysqli_query($id,"SELECT  s.id , s.nom, s.prenom, s.date_nais, g
                     <td><?=$row["date_nais"]?></td>
                     <td><?=$row["libelle"]?></td>
                     <td><?=$row["compétences"]?></td>
-                    <td><img src="<?php if($row["avatar_path"]!=""){echo $row["avatar_path"];}else{echo "empty.png";}?>" style="width:20px;height:20px;" title="<?php echo $row["nom"]." ".$row["prenom"];?>" ></td>
+                    <td><img  id="img" src="<?php if($row["avatar_path"]!=""){echo $row["avatar_path"];}else{echo "empty.png";}?>" style="width:50px;height:50px;" title="<?php echo $row["nom"]." ".$row["prenom"];?>" ></td>
                 </tr>
                 <?php } ?>    
             </table>

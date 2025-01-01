@@ -20,7 +20,8 @@ if(isset($_POST["sb"])){
         
     extract($_POST);
     
-    @$competences?@$competences=implode("|",@$competences):'';
+    $competences = isset($_POST['competences']) ? $_POST['competences'] : [];
+    $competences = !empty($competences) ? implode("|", $competences) : '';
 
     
     //si l'action et ajouter
@@ -32,12 +33,11 @@ if(isset($_POST["sb"])){
         }
 
         //definir des variables pour stocker le path et type de fichier
-        $avatar_path=($_FILES["avatar"]["error"]==0)?"pictures/".$_FILES["avatar"]["name"]:"";
+        $avatar_path=($_FILES["avatar"]["error"]==0)?"pictures/".$_FILES["avatar"]["name"]:"errorPicture";
         $avatar_type=$_FILES["avatar"]["type"];
 
         //requete pour inserer les informations vias formulaire
-        $req_ins_st=mysqli_query($id,"INSERT INTO stagiaire ( nom, prenom, date_nais, idgroupe, compétences, avatar_path, avatar_type)
-                                         VALUES ('$nom', '$prenom', '$date_nais', '$idgroupe', '$competences', '$avatar_path', '$avatar_type')");
+        $req_ins_st=mysqli_query($id,"INSERT INTO stagiaire ( nom, prenom, date_nais, idgroupe, compétences, avatar_path, avatar_type) VALUES ('$nom', '$prenom', '$date_nais', '$idgroupe', '$competences', '$avatar_path', '$avatar_type')");
 
         //si requete es executer avec succes 
         if($req_ins_st){
@@ -77,32 +77,42 @@ if(isset($_POST["sb"])){
     <title>Formulaire de saisie</title>
 
     <script type="text/javascript">
-        function displayUploadDialg(){
+        function displayUploadDialg(event){
+            //every button click in a form is a submit behavior
+            event.preventDefault()
             document.getElementById("avatar").click();
         }
-        function loadImage(p){
-            document.getElementById("avatarPr").src=URL.createObjectURL(p.files[0]);
+        function loadImage(input){
+            //input.files[0] containes informations on the file loaded
+            //it set the avatarPr source to a url created in the user systeme to display the image before submitting
+            const avatar=document.getElementById("avatarPr");
+            avatar.src=''
+            avatar.src=URL.createObjectURL(input.files[0]);
+            avatar.style.display="block"
         }
-        function displayPdf(p){
-            document.getElementById("pdfId").href=URL.createObjectURL(p.files[0]);
-            document.getElementById("pdfId").textContent=p.value.replace("C:\\fakepath\\","");
-        }
+        document.addEventListener("DOMContentLoaded", () => {
+            const avatar=document.getElementById("avatarPr");
+            if(avatar.src.includes('nopicture')){
+                avatar.style.display="none"
+            }
+        })
     </script>
     <link rel="stylesheet" href="formstyle.css">
     <style>
         body{
             font-family:sans-serif;
         }
+        *{
+            overflow:hidden
+        }
     </style>
     </head>
 
 <body>
 
-    <!-- message de succes  d'ajoute(backend) -->
-    <?php if(isset($newest_id)) echo "<span style='color:green;'>stagiaire (id=$newest_id) ajouté(e) avec succés</span><br>";?>
         <form action="<?=$_SERVER["PHP_SELF"]?>" method="post" enctype="multipart/form-data">
 
-            <input  name="idst" value="<?=@$_GET["id"]?>">
+            <input  name="idst" value="<?=@$_GET["id"]?>" style="display:none">
 
                 <section id='personelInformations'>
 
@@ -157,13 +167,14 @@ if(isset($_POST["sb"])){
 
                 <section id='image'>
 
-                    <label for="avatar">Image:</label><br>
-                    <input type="file" id="avatar" name="avatar" accept=".jpg,.jpeg,.png"style="width:250px;display:none;" onchange="loadImage(this)">
-                    <button onclick="displayUploadDialg()" id='buttonUpload'>Upload Image</button>
-                    <!-- <img src="<?php if(isset($avatar_path)&& $avatar_path!=""){echo $avatar_path;}else{echo "empty.png";}?>" onclick="displayUploadDialg()"  id="avatarPr" style="width:120px;height:120px;"><br><br>  -->
+                    <label for="img">Image:</label><br>
+                    <img src="<?php  if(isset($avatar_path)){echo $avatar_path;} else{echo "nopicture";} ?>" id="avatarPr" style='width:150px;height:130px;margin-left:44%;'>
+
+                    <input type="file" id="avatar" name="avatar" accept=".jpg,.jpeg,.png" style="width:250px;display:none;" onchange="loadImage(this)">
+                    <button onclick="displayUploadDialg(event)" id="buttonUpload">Upload Image</button>
+                   
 
                 </section>
-                
                 <section id='submit'>
                     <button id='cancelBtn'><a href="affichage.php">Cancel</a></button>
                     <input type="submit" name="sb" value="<?php if(isset($_GET["id"])) echo "Modifier" ; else echo "Ajouter";?>">

@@ -14,10 +14,12 @@ td {
 th {
     background-color: #f2f2f2;
 }
-table th{
+
+table th {
     background-color: rgb(89, 156, 156);
 }
-table tr:hover{
+
+table tr:hover {
     background-color: rgb(205, 225, 225);
 }
 
@@ -35,35 +37,39 @@ table tr:hover{
     padding: 8px;
     border: none;
     border-radius: 5px;
-    margin-left:10px;
 }
 
 #searchArea {
     border: 1px solid black;
+    width: 60%;
+    margin:auto;
+    margin-top: 25px;
     margin-bottom: 30px;
     border-radius: 5px;
     padding-bottom: 25px;
     display: flex;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0,  0, 0, 0.19);
 }
 
-#searchArea input{
+#searchArea input {
     padding: 8px;
 }
 
-#searchArea form{
+#searchArea form {
     width: 60%;
     margin: auto;
     padding: 10px;
 }
 
-#searchbtn{
+#searchbtn {
     background-color: green;
     color: white;
     border-radius: 5px;
     border: none;
     width: 40%;
 }
-#resetbtn{
+
+#resetbtn {
     background-color: #f1c40f;
     color: white;
     border-radius: 5px;
@@ -78,11 +84,52 @@ table tr:hover{
     border-radius: 5px;
     margin-bottom: 10px;
 }
-#addBtn a{
+
+#addBtn a {
     text-decoration: none;
     color: white;
 }
-#actions{
+
+#actions {
     display: flex;
     gap: 5px;
 }
+
+#blc{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#nbrpage{
+    padding: 5px;
+    margin-bottom: 5px;
+    background-color: #0062cc;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size:15px;
+}
+#pag a{
+    text-decoration: none;
+    margin-left: 4px;
+    font-size: 20px;
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    
+}
+#pag .disbled a:hover{
+    background-color: #e0e0e0;
+}
+#pag .active{
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+}
+#pag .disabled{
+    color: #ccc;
+    cursor: default;
+}
+  
