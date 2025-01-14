@@ -1,8 +1,8 @@
 section {
-    width: 30%;
+    width: 40%;
     height: 300px;
     margin: auto;
-    margin-top: 10%;
+    margin-top: 5%;
     padding: 40px;
     border-radius: 5px;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
@@ -10,7 +10,7 @@ section {
 
 p{
     text-align: center;
-    font-size: larger;
+    font-size: x-large;
 }
 
 #areas {
@@ -24,8 +24,8 @@ p{
 
 #areas input {
     padding: 10px;
-    border: 1px solid gray;
-    box-shadow: 1px 1px 3px rgb(139, 136, 136);
+    border: 1px solid rgb(180, 180, 180);
+    box-shadow: 1px 1px 3px rgb(184, 183, 183);
     border-radius: 5px;
 }
 
@@ -37,11 +37,12 @@ p{
 
 input[type='submit'] {
     padding: 10px;
-    width: 8rem;
+    width: 10rem;
     color: white;
     background-color: #0062cc;
     border: none;
     border-radius: 5px;
+    font-size: larger;
 }
 
 .error {

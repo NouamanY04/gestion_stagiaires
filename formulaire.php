@@ -1,6 +1,7 @@
 <?php
 require_once("cnx.php");
 
+$IncompletInfo=false;
 //requete pour recuperer list de groupes et competences pour afficher dans formulaire
 $req_grp=mysqli_query($id,"select * from groupe");
 $req_cpt=mysqli_query($id,"select * from competence");
@@ -17,57 +18,63 @@ if(isset($_GET["id"])){
 
 //submit le formulaire pour l'ajout/modification des informations 
 if(isset($_POST["sb"])){
-        
     extract($_POST);
     
-    $competences = isset($_POST['competences']) ? $_POST['competences'] : [];
-    $competences = !empty($competences) ? implode("|", $competences) : '';
-
-    
-    //si l'action et ajouter
-    if($_POST["sb"]=="Ajouter"){
-
-        //create the folder to store pictures sent from the forms
-        if(!file_exists("pictures")){
-            mkdir("pictures");
-        }
-
-        //definir des variables pour stocker le path et type de fichier
-        $avatar_path=($_FILES["avatar"]["error"]==0)?"pictures/".$_FILES["avatar"]["name"]:"errorPicture";
-        $avatar_type=$_FILES["avatar"]["type"];
-
-        //requete pour inserer les informations vias formulaire
-        $req_ins_st=mysqli_query($id,"INSERT INTO stagiaire ( nom, prenom, date_nais, idgroupe, compétences, avatar_path, avatar_type) VALUES ('$nom', '$prenom', '$date_nais', '$idgroupe', '$competences', '$avatar_path', '$avatar_type')");
-
-        //si requete es executer avec succes 
-        if($req_ins_st){
-            move_uploaded_file($_FILES["avatar"]["tmp_name"],$avatar_path);
-            $newest_id=mysqli_insert_id($id);
-            unset($nom);
-            unset($prenom);
-            unset($date_nais);
-            unset($idgroupe);
-            unset($competences);
-            unset($avatar_path);
-            unset($avatar_type);
-            header("location:affichage.php");
-        }
-
-
-    //si l'action est update
+    if(empty($_POST['nom']) || empty($_POST['prenom'])){
+        $IncompletInfo = true;
     } else {
-        $avatar_path=($_FILES["avatar"]["error"]==0)?"pictures/".$_FILES["avatar"]["name"]:""; 
-        $avatar_type=$_FILES["avatar"]["type"];
+        $competences = isset($_POST['competences']) ? $_POST['competences'] : [];
+        $competences = !empty($competences) ? implode("|", $competences) : '';
 
-        $req_mod_st=mysqli_query($id,"UPDATE stagiaire SET nom = '$nom', prenom = '$prenom', date_nais = '$date_nais',idgroupe=$idgroupe, compétences = '$competences' ,avatar_path='$avatar_path',avatar_type='$avatar_type'  WHERE id =".$idst);
-
-        if($req_mod_av_st){
-            move_uploaded_file($_FILES["avatar"]["tmp_name"],$avatar_path);
-        }
         
-        if($req_mod_st){
-            header("location:affichage.php");
+        //si l'action et ajouter
+        if($_POST["sb"]=="Ajouter"){
+
+            //create the folder to store pictures sent from the forms
+            if(!file_exists("pictures")){
+                mkdir("pictures");
+            }
+            
+            //definir des variables pour stocker le path et type de fichier
+            $avatar_path=($_FILES["avatar"]["error"]==0)?"pictures/".$_FILES["avatar"]["name"]:"errorPicture";
+            $avatar_type=$_FILES["avatar"]["type"];
+
+            //requete pour inserer les informations vias formulaire
+            $req_ins_st=mysqli_query($id,"INSERT INTO stagiaire ( nom, prenom, date_nais, idgroupe, compétences, avatar_path, avatar_type) VALUES ('$nom', '$prenom', '$date_nais', '$idgroupe', '$competences', '$avatar_path', '$avatar_type')");
+
+            //si requete es executer avec succes 
+            if($req_ins_st){
+                move_uploaded_file($_FILES["avatar"]["tmp_name"],$avatar_path);
+                $newest_id=mysqli_insert_id($id);
+                unset($nom);
+                unset($prenom);
+                unset($date_nais);
+                unset($idgroupe);
+                unset($competences);
+                unset($avatar_path);
+                unset($avatar_type);
+                setcookie('addsuccess','1',time()+1,'/');
+                header("location:affichage.php");
+            }
+
+
+        //si l'action est update
+        } else {
+            $avatar_path=($_FILES["avatar"]["error"]==0)?"pictures/".$_FILES["avatar"]["name"]:""; 
+            $avatar_type=$_FILES["avatar"]["type"];
+
+            $req_mod_st=mysqli_query($id,"UPDATE stagiaire SET nom = '$nom', prenom = '$prenom', date_nais = '$date_nais',idgroupe=$idgroupe, compétences = '$competences' ,avatar_path='$avatar_path',avatar_type='$avatar_type'  WHERE id =".$idst);
+
+            if($req_mod_av_st){
+                move_uploaded_file($_FILES["avatar"]["tmp_name"],$avatar_path);
+            }
+            
+            if($req_mod_st){
+                header("location:affichage.php");
+                setcookie('modifysuccess','1',time()+1,'/');
+            }
         }
+    
 }}
 
 ?>
@@ -98,6 +105,7 @@ if(isset($_POST["sb"])){
         })
     </script>
     <link rel="stylesheet" href="formstyle.css">
+    <script src="https://cdn.jsdelivr.net/gh/smallvi/yoyoPopup@latest/dist/yoyoPopup.umd.min.js"></script>
     <style>
         body{
             font-family:sans-serif;
@@ -114,6 +122,16 @@ if(isset($_POST["sb"])){
 
             <input  name="idst" value="<?=@$_GET["id"]?>" style="display:none">
 
+            <!--affichage message lorsque formulaire et icomplet -->
+            <?php if($IncompletInfo) {?>
+                <script type="text/javascript">
+                    showYoyoPopup({
+                                text: "veuillez remplir tous les informations personnels de l'etudiant.",
+                                type: 'danger',
+                                timeOut:2500,
+                    })
+                </script>
+            <?php } ?>
                 <section id='personelInformations'>
 
                     <h3>Informations Personnels</h3>
@@ -178,9 +196,7 @@ if(isset($_POST["sb"])){
                 <section id='submit'>
                     <button id='cancelBtn'><a href="affichage.php">Cancel</a></button>
                     <input type="submit" name="sb" value="<?php if(isset($_GET["id"])) echo "Modifier" ; else echo "Ajouter";?>">
-        
                 </section>
-                
         </form>
 </body>
 </html>

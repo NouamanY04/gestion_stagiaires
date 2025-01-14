@@ -43,7 +43,7 @@ table tr:hover {
     border: 1px solid black;
     width: 60%;
     margin:auto;
-    margin-top: 25px;
+    margin-top: 0px;
     margin-bottom: 30px;
     border-radius: 5px;
     padding-bottom: 25px;
@@ -70,7 +70,6 @@ table tr:hover {
 }
 
 #resetbtn {
-    background-color: #f1c40f;
     color: white;
     border-radius: 5px;
     border: none;
@@ -131,5 +130,20 @@ table tr:hover {
 #pag .disabled{
     color: #ccc;
     cursor: default;
+}
+#head{
+    display: flex;
+    
+}
+#logoutbtn{
+    padding: 10px;
+    background-color: #0062cc;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+}
+#logoutbtn a{
+    text-decoration: none;
+    color: white;
 }
   
