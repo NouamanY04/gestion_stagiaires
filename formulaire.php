@@ -31,9 +31,12 @@ if(isset($_POST["sb"])){
         if($_POST["sb"]=="Ajouter"){
 
             //create the folder to store pictures sent from the forms
-            if(!file_exists("pictures")){
-                mkdir("pictures");
+            if (!file_exists("pictures")) {
+                if (!mkdir("pictures", 0777, true)) {
+                    die("Erreur lors de la création du dossier pictures.");
+                }
             }
+
             
             //definir des variables pour stocker le path et type de fichier
             $avatar_path=($_FILES["avatar"]["error"]==0)?"pictures/".$_FILES["avatar"]["name"]:"errorPicture";
@@ -60,7 +63,14 @@ if(isset($_POST["sb"])){
 
         //si l'action est update
         } else {
-            $avatar_path=($_FILES["avatar"]["error"]==0)?"pictures/".$_FILES["avatar"]["name"]:""; 
+             //create the folder to store pictures sent from the forms
+            if (!file_exists("pictures")) {
+                if (!mkdir("pictures", 0777, true)) {
+                    die("Erreur lors de la création du dossier pictures.");
+                }
+            }
+
+            $avatar_path=($_FILES["avatar"]["error"]==0)?"pictures/".$_FILES["avatar"]["name"]:"errorPicture"; 
             $avatar_type=$_FILES["avatar"]["type"];
 
             $req_mod_st=mysqli_query($id,"UPDATE stagiaire SET nom = '$nom', prenom = '$prenom', date_nais = '$date_nais',idgroupe=$idgroupe, compétences = '$competences' ,avatar_path='$avatar_path',avatar_type='$avatar_type'  WHERE id =".$idst);
