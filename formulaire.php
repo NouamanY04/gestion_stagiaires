@@ -75,7 +75,7 @@ if(isset($_POST["sb"])){
 
             $req_mod_st=mysqli_query($id,"UPDATE stagiaire SET nom = '$nom', prenom = '$prenom', date_nais = '$date_nais',idgroupe=$idgroupe, compétences = '$competences' ,avatar_path='$avatar_path',avatar_type='$avatar_type'  WHERE id =".$idst);
 
-            if($req_mod_av_st){
+            if($req_mod_st){
                 move_uploaded_file($_FILES["avatar"]["tmp_name"],$avatar_path);
             }
             
