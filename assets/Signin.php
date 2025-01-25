@@ -1,5 +1,5 @@
 <?php
-require_once('cnx.php');
+require_once('../backend/cnx.php');
 $password_false;
 
 if(($_SERVER["REQUEST_METHOD"]== "POST") && isset($_POST["sb"])){
@@ -14,7 +14,7 @@ if(($_SERVER["REQUEST_METHOD"]== "POST") && isset($_POST["sb"])){
         session_start();
         $getUserAdmin=mysqli_fetch_assoc($result);
         $_SESSION['admin']=$getUserAdmin['username'];
-        header("location: affichage.php");
+        header("location:../assets/affichage.php");
     } else {
         $password_false=true;
     }
@@ -30,7 +30,7 @@ mysqli_close($id);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sign in</title>
-    <link rel="stylesheet" href="Signin.css">
+    <link rel="stylesheet" href="../css/Signin.css">
     <style>
         body{
             font-family:sans-serif;

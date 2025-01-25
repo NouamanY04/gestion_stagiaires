@@ -1,5 +1,5 @@
 <?php
-require_once("cnx.php");
+require_once("../backend/cnx.php");
 
 $IncompletInfo=false;
 //requete pour recuperer list de groupes et competences pour afficher dans formulaire
@@ -57,7 +57,7 @@ if(isset($_POST["sb"])){
                 unset($avatar_path);
                 unset($avatar_type);
                 setcookie('addsuccess','1',time()+1,'/');
-                header("location:affichage.php");
+                header("location:../assets/affichage.php");
             }
 
 
@@ -80,7 +80,7 @@ if(isset($_POST["sb"])){
             }
             
             if($req_mod_st){
-                header("location:affichage.php");
+                header("location:../assets/affichage.php");
                 setcookie('modifysuccess','1',time()+1,'/');
             }
         }
@@ -114,7 +114,7 @@ if(isset($_POST["sb"])){
             }
         })
     </script>
-    <link rel="stylesheet" href="formstyle.css">
+    <link rel="stylesheet" href="../css/formstyle.css">
     <script src="https://cdn.jsdelivr.net/gh/smallvi/yoyoPopup@latest/dist/yoyoPopup.umd.min.js"></script>
     <style>
         body{

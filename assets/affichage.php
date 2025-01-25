@@ -1,5 +1,5 @@
 <?php
-require_once("cnx.php");
+require_once("../backend/cnx.php");
 //recuperer les liste de groupes pour le formulaire search
 $req_grp=mysqli_query($id,"select * from groupe");
 
@@ -13,7 +13,7 @@ if(isset($_GET["nbrpagebloc"]))
 //if reset button in search form is clicked
 if(isset($_GET["reset"])){
     unset($_GET);
-    header("location:affichage.php  ");
+    header("location:../assets/affichage.php ");
 }
 
 //si le nom pour la recherche est saisi
@@ -104,7 +104,7 @@ $req_stagiaires=mysqli_query($id,"SELECT  s.id , s.nom, s.prenom, s.date_nais, g
     
 
     </script>
-    <link rel="stylesheet" href="affichage.css">
+    <link rel="stylesheet" href="../css/affichage.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=edit" />
     <script src="https://cdn.jsdelivr.net/gh/smallvi/yoyoPopup@latest/dist/yoyoPopup.umd.min.js"></script>
 </head>
@@ -167,7 +167,7 @@ $req_stagiaires=mysqli_query($id,"SELECT  s.id , s.nom, s.prenom, s.date_nais, g
                     </form>
             </div>
             <div>
-                <button id='logoutbtn'><a href="logout.php">Logout</a></button>
+                <button id='logoutbtn'><a href="../backend/logout.php">Logout</a></button>
             </div>
         </section>
             
@@ -175,7 +175,7 @@ $req_stagiaires=mysqli_query($id,"SELECT  s.id , s.nom, s.prenom, s.date_nais, g
         <br><br>
         
         <div id="actions">
-                <form  id="deleteAll" action="SupprimerTout.php" method="post">
+                <form  id="deleteAll" action="../backend/SupprimerTout.php" method="post">
                     <input type="hidden" name="delete" value="1">
                     <?php if ($nbrSt != 0) : ?>
                         <button 
@@ -288,7 +288,7 @@ $req_stagiaires=mysqli_query($id,"SELECT  s.id , s.nom, s.prenom, s.date_nais, g
                             hasConfirmation: true,
                             confirmLabel: 'Yes, Continue',
                             confirmFunction: () => {
-                                window.location.href = 'suppressionSt.php?id=<?=$row['id']?>';
+                                window.location.href = '../backend/suppressionSt.php?id=<?=$row['id']?>';
                             },
                             closeLabel: 'Close',
                             isStatic: true,
